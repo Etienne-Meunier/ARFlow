@@ -12,6 +12,8 @@ from utils.flow_utils import flow_to_image, resize_flow
 from utils.torch_utils import restore_model
 from models.pwclite import PWCLite
 
+from ipdb import set_trace
+
 
 class TestHelper():
     def __init__(self, cfg):
