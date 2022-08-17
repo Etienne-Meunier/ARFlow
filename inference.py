@@ -8,12 +8,11 @@ from easydict import EasyDict
 from torchvision import transforms
 from transforms import sep_transforms
 
-from utils.flow_utils import flow_to_image, resize_flow
+from utils.flow_utils import flow_to_image, resize_flow, writeFlow
 from utils.torch_utils import restore_model
 from models.pwclite import PWCLite
 
 from ipdb import set_trace
-
 
 class TestHelper():
     def __init__(self, cfg):
@@ -63,11 +62,12 @@ if __name__ == '__main__':
 
     imgs = [imageio.imread(img).astype(np.float32) for img in args.img_list]
     h, w = imgs[0].shape[:2]
-
+    set_trace()
     flow_12 = ts.run(imgs)['flows_fw'][0]
 
     flow_12 = resize_flow(flow_12, (h, w))
     np_flow_12 = flow_12[0].detach().cpu().numpy().transpose([1, 2, 0])
+    writeFlow('test_flo.flo', np_flow_12)
 
     vis_flow = flow_to_image(np_flow_12)
 
